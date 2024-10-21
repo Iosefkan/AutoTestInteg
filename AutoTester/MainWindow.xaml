@@ -1,0 +1,85 @@
+﻿<Window x:Class="AutoTester.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:AutoTester"
+        mc:Ignorable="d"
+        x:Name="this"
+        Title="MainWindow" Height="720" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.8*"/>
+            <RowDefinition/>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="1.5*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Margin="5" Header="Настройки генератора тест-кейсов"  Grid.RowSpan="1" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <CheckBox IsChecked="{Binding Path=IsNegative}" Content="Только негативные"/>
+                <TextBox Padding="2,3,2,3" Grid.Row="1" Text="{Binding Path=TestCaseCount, ConverterCulture=ru-RU}" VerticalAlignment="Center"  PreviewTextInput="TextBox_PreviewPositive" materialDesign:HintAssist.Hint="Количество тест-кейсов" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                <TextBox Padding="2,3,2,3" Grid.Row="2" Text="{Binding Path=Eps, ConverterCulture=ru-RU}" VerticalAlignment="Center"  PreviewTextInput="TextBox_PreviewPositiveDouble" materialDesign:HintAssist.Hint="Допустимая погрешность" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Margin="5" Header="Исходные данные"  Grid.RowSpan="1" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBox Padding="1,2,1,2" Grid.Row="0" Text="{Binding Path=LeftLimit, ConverterCulture=ru-RU}" VerticalAlignment="Center"  PreviewTextInput="TextBox_Preview" materialDesign:HintAssist.Hint="Левая граница диапазона" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                <TextBox Padding="2,3,2,3" Grid.Row="1" Text="{Binding Path=RightLimit, ConverterCulture=ru-RU}" VerticalAlignment="Center"  PreviewTextInput="TextBox_Preview" materialDesign:HintAssist.Hint="Правая граница диапазона" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                <ComboBox Padding="2,3,2,3" Grid.Row="2" materialDesign:HintAssist.Hint="Метод интегрирования" SelectedIndex="{Binding Method}" Style="{StaticResource MaterialDesignOutlinedComboBox}">
+                    <ComboBoxItem>Метод парабол</ComboBoxItem>
+                    <ComboBoxItem>Метод трапеции</ComboBoxItem>
+                    <ComboBoxItem>Метод Монте-Карло</ComboBoxItem>
+                </ComboBox>
+                <TextBox Padding="2,3,2,3" Grid.Row="3" Text="{Binding Path=Args}" VerticalAlignment="Center"  PreviewTextInput="TextBox_PreviewSpace" materialDesign:HintAssist.Hint="Коэффициенты полинома (через пробел)" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+
+            </Grid>
+        </GroupBox>
+        <Button Grid.Column="0" Grid.Row="2" Margin="5" Content="Генерировать тесты" VerticalAlignment="Center" Command="{Binding TestCommand}" CommandParameter="{Binding ElementName=this}"/>
+        <Button Grid.Column="1" Grid.Row="2" Margin="5" Content="Экспортировать" VerticalAlignment="Center" Command="{Binding ExportCommand}"/>
+        <GroupBox Margin="5" Header="Вывод"  Grid.RowSpan="1" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="3">
+            <TextBox IsReadOnly="True"
+                     AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Auto"
+                     HorizontalScrollBarVisibility="Auto"
+                     Text="{Binding Path=RichBoxString}"/>
+        </GroupBox>
+        <GroupBox Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" Margin="5" Header="Тест-кейсы">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="0.1*"/>
+                </Grid.RowDefinitions>
+                <ScrollViewer Grid.Row="0" x:Name="scroller">
+                    <ListBox x:Name="propList" ItemsSource="{Binding Cases}" PreviewMouseWheel="propList_PreviewMouseWheel">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel Margin="5">
+                                    <CheckBox IsChecked="{Binding Use}"/>
+                                    <TextBlock Margin="10,0,0,0" Text="{Binding TestHeader}" TextWrapping="Wrap"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ScrollViewer>
+                <Button Grid.Row="1" Margin="5" Content="Тестировать" VerticalAlignment="Center" Command="{Binding StartTestCommand}"/>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>

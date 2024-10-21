@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "mCFpDfFiYTk=",
+  "success": true,
+  "projectFilePath": "D:\\Тестирование\\AutoTester\\AutoTester\\AutoTester.csproj",
+  "expectedPackageFiles": [
+    "D:\\dotnet\\communitytoolkit.mvvm\\8.2.2\\communitytoolkit.mvvm.8.2.2.nupkg.sha512",
+    "D:\\dotnet\\materialdesigncolors\\3.1.0\\materialdesigncolors.3.1.0.nupkg.sha512",
+    "D:\\dotnet\\materialdesignthemes\\5.1.0\\materialdesignthemes.5.1.0.nupkg.sha512",
+    "D:\\dotnet\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512"
+  ],
+  "logs": []
+}
